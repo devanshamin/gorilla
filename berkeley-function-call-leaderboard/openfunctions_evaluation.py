@@ -127,7 +127,7 @@ def generate_results(args, model_name, test_cases_total):
 
 
 if __name__ == "__main__":
-    load_dotenv()  # Load the .env file
+    load_dotenv(dotenv_path="./.env", verbose=True, override=True)  # Load the .env file
     
     args = get_args()
 

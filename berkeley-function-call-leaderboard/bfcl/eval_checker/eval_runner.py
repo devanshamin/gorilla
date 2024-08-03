@@ -466,5 +466,5 @@ if __name__ == "__main__":
             # We patch it here to avoid confusing the user.
             model_names.append(model_name.replace("/", "_"))
             
-    load_dotenv()  # Load the .env file
+    load_dotenv(dotenv_path="../../.env", verbose=True, override=True)  # Load the .env file
     runner(model_names, test_categories, api_sanity_check)

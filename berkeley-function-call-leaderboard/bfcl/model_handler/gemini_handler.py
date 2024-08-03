@@ -7,7 +7,7 @@ from bfcl.model_handler.utils import (
     language_specific_pre_processing,
 )
 from bfcl.model_handler.constant import GORILLA_TO_OPENAPI
-import subprocess, requests, json, time
+import subprocess, requests, json, time, os
 
 
 class GeminiHandler(BaseHandler):
@@ -41,9 +41,10 @@ class GeminiHandler(BaseHandler):
             },
             "tools": {"function_declarations": functions},
         }
-
+        
+        GCP_PROJECT_ID = os.getenv("GEMINI_GCP_PROJECT_ID")
         # NOTE: To run the gemini model, you need to provide your own GCP project ID, which can be found in the GCP console.
-        API_URL = "https://us-central1-aiplatform.googleapis.com/v1beta1/projects/{YOUR_GCP_PROJECT_ID_HERE}/locations/us-central1/publishers/google/models/" + self.model_name + ":generateContent"
+        API_URL = f"https://us-central1-aiplatform.googleapis.com/v1beta1/projects/{GCP_PROJECT_ID}/locations/us-central1/publishers/google/models/" + self.model_name + ":generateContent"
         headers = {
             "Authorization": "Bearer " + token,
             "Content-Type": "application/json",
