@@ -1,8 +1,8 @@
-import re, ast, builtins, ast, json
+import re, ast, builtins, ast, json, os
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.java_parser import parse_java_function_call
 from bfcl.model_handler.js_parser import parse_javascript_function_call
-from bfcl.model_handler.constant import GORILLA_TO_OPENAPI, USE_COHERE_OPTIMIZATION
+from bfcl.model_handler.constant import GORILLA_TO_OPENAPI
 
 
 def _cast_to_openai_type(properties, mapping, test_category):
@@ -90,7 +90,7 @@ def convert_to_tool(
                     params["description"] += "The additional properties:" +str(params["additionalProperties"])
                     del params["additionalProperties"]
         if model_style == ModelStyle.COHERE:
-            if USE_COHERE_OPTIMIZATION:
+            if os.getenv("USE_COHERE_OPTIMIZATION"):
                 if "required" not in item["parameters"]:
                     item["parameters"]["required"] = []
                 for param_name, params in item["parameters"]["properties"].items():

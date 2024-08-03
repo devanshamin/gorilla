@@ -2,7 +2,6 @@ import argparse, json, os
 from tqdm import tqdm
 from bfcl.model_handler.handler_map import handler_map
 from bfcl.model_handler.model_style import ModelStyle
-from bfcl.model_handler.constant import USE_COHERE_OPTIMIZATION
 from bfcl.eval_checker.eval_checker_constant import TEST_COLLECTION_MAPPING
 from dotenv import load_dotenv
 
@@ -142,7 +141,7 @@ if __name__ == "__main__":
     print(f"Generating results for {args.model} on test category: {test_name_total}.")
 
     for model_name in args.model:
-        if USE_COHERE_OPTIMIZATION and "command-r-plus" in model_name:
+        if os.getenv("USE_COHERE_OPTIMIZATION") and "command-r-plus" in model_name:
             model_name = model_name + "-optimized"
         
         test_cases_total = collect_test_cases(test_filename_total, model_name)
