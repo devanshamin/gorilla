@@ -20,9 +20,9 @@ for var in ENV_VARS:
     if os.getenv(var) == "":
         raise NoAPIKeyError(var)
 
-    PLACEHOLDERS[f"YOUR-{var}"] = os.getenv(var)
-print(PLACEHOLDERS)
-    
+    PLACEHOLDERS[f"YOUR-{var.replace('_', '-')}"] = os.getenv(var)
+
+
 def replace_placeholders(data):
     """
     Recursively replace placeholders in a nested dictionary or list using string.replace.
