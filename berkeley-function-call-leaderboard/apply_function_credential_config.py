@@ -4,6 +4,7 @@ import argparse
 import os
 from bfcl.eval_checker import custom_exception
 from bfcl.eval_checker.custom_exception import NoAPIKeyError
+from dotenv import load_dotenv
 
 parser = argparse.ArgumentParser(description="Replace placeholders in the function credential config file.")
 parser.add_argument("--input-path", help="Path to the function credential config file. Can be a file or a directory.")
@@ -12,6 +13,7 @@ args = parser.parse_args()
 
 
 # Load the actual API keys
+load_dotenv()
 ENV_VARS = ("GEOCODE_API_KEY", "RAPID_API_KEY", "OMDB_API_KEY", "EXCHANGERATE_API_KEY")
 PLACEHOLDERS = {}
 for var in ENV_VARS:
@@ -19,7 +21,7 @@ for var in ENV_VARS:
         raise NoAPIKeyError(var)
 
     PLACEHOLDERS[f"YOUR-{var}"] = os.getenv(var)
-    
+print(PLACEHOLDERS)
     
 def replace_placeholders(data):
     """
