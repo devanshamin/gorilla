@@ -45,10 +45,10 @@ Note that if decided to run OSS model, the generation script uses vllm and there
 
 ## Setting up Environment Variables
 
-We use `.env` file to store the environment variables. We have provided a sample `.env.sample` file in the `gorilla/berkeley-function-call-leaderboard` directory. You should make a copy of this file, rename it to `.env` and fill in the necessary values.
+We use `.env` file to store the environment variables. We have provided a sample `.env.example` file in the `gorilla/berkeley-function-call-leaderboard` directory. You should make a copy of this file, rename it to `.env` and fill in the necessary values.
 
 ```bash
-cp .env.sample .env
+cp .env.example .env
 ```
 
 ### API Keys for Execution Evaluation (Can be Skipped: Necessary for Executable Test Categories)
