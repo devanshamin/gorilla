@@ -12,7 +12,7 @@ for var in ENV_VARS:
     if os.getenv(var) == "":
         raise NoAPIKeyError(var)
 
-    api_key[var] = os.getenv(var)
+    api_key[var.replace("_", "-")] = os.getenv(var)
 
 
 def calculate_triangle_area(base, height):
