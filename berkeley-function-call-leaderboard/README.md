@@ -33,26 +33,28 @@ cd gorilla/berkeley-function-call-leaderboard
 pip install -e .
 ```
 
-### Installing Extra Dependencies
+### Installing Extra Dependencies for Self-Hosted Open Source Models
 
-To install extra dependencies, use the following command:
+To do LLM generation on self-hosted open source models, you need to run the following command to install the extra dependencies (vLLM).
 
 ```bash
-pip install -e ".[NAME]"
+pip install -e .[oss_eval]
 ```
 
-Available options for `NAME` are:
+Note that if decided to run OSS model, the generation script uses vllm and therefore requires GPU for hosting and inferencing. It can only be installed on Linux and Windows (*not Mac*). If you have questions or concerns about evaluating OSS models, please reach out to us in our [discord channel](https://discord.gg/grXXvj9Whz).
 
-| Name             | Description     |
-|------------------|-----------------|
-| `oss_eval`       | For LLM generation on self-hosted open source models. Requires GPU supported by vLLM. Only works on Linux and Windows. |
-| `proprietary_eval` | For LLM generation on proprietary models (most common, **recommended**). |
-| `all`            | Installs all dependencies, combining the above two options. Only works on Linux and Windows. |
+## Setting up Environment Variables
 
-## Execution Evaluation Data Post-processing (Can be Skipped: Necesary for Executable Test Categories)
-Add your keys into `function_credential_config.json`, so that the original placeholder values in questions, params, and answers will be reset.
+We use `.env` file to store the environment variables. We have provided a sample `.env.sample` file in the `gorilla/berkeley-function-call-leaderboard` directory. You should make a copy of this file, rename it to `.env` and fill in the necessary values.
 
-To run the executable test categories, there are 4 API keys to include:
+```bash
+cp .env.sample .env
+```
+
+### API Keys for Execution Evaluation (Can be Skipped: Necessary for Executable Test Categories)
+Add your keys into the `.env` file you just created, so that the original placeholder values in questions, params, and answers will be reset.
+
+To run the executable test categories, there are 4 API keys that's necessary:
 
 1. RAPID-API Key: https://rapidapi.com/hub
 
@@ -62,34 +64,42 @@ To run the executable test categories, there are 4 API keys to include:
     * Covid 19: https://rapidapi.com/api-sports/api/covid-193
     * Time zone by Location: https://rapidapi.com/BertoldVdb/api/timezone-by-location
 
-    All the Rapid APIs we use have free tier usage. As a result, you need to subscribe to those API providers in order to have the executable test environment setup but it will be free of charge!
+    All the Rapid APIs we use have free tier usage. You need to **subscribe** to those API providers in order to have the executable test environment setup but it will be *free of charge*!
 
 2. Exchange Rate API:https://www.exchangerate-api.com
 3. OMDB API: http://www.omdbapi.com/apikey.aspx
 4. Geocode API: https://geocode.maps.co/
 
 The `apply_function_credential_config.py` will automatically search for dataset files in the default `./data/` directory and replace the placeholder values with the actual API keys.
+After you have filled in the necessary values in the `.env` file, you can run the following command to apply the real API keys to the dataset files.
 
 ```bash
 python apply_function_credential_config.py
 ```
 
 
-## Evaluating different models on the BFCL
+### API Keys for Model Response Generation (Can be Skipped; Necessary for hosted models)
 
-Make sure the model API keys are included in your environment variables. Running proprietary models like GPTs, Claude, Mistral-X will require them.
+We use API keys to query the model endpoints for generating responses.
+Running proprietary models like GPT, Claude, Mistral will require a key.
+You only need to fill in the necessary fields in the `.env` file for the models you want to evaluate.
 
-```bash
-export OPENAI_API_KEY=sk-XXXXXX
-export MISTRAL_API_KEY=XXXXXX
-export FIRE_WORKS_API_KEY=XXXXXX
-export ANTHROPIC_API_KEY=XXXXXX
-export COHERE_API_KEY=XXXXXX
-export NVIDIA_API_KEY=nvapi-XXXXXX
-export YI_API_KEY=XXXXXX
+```
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=
+MISTRAL_API_KEY=
+FIREWORKS_API_KEY=
+NVIDIA_API_KEY=
+YI_API_KEY=
+COHERE_API_KEY=
+
+DATABRICKS_API_KEY=
+DATABRICKS_AZURE_ENDPOINT_URL=
+
+GEMINI_GCP_PROJECT_ID=
 ```
 
-If decided to run OSS model, the generation script uses vllm and therefore requires GPU for hosting and inferencing. If you have questions or concerns about evaluating OSS models, please reach out to us in our [discord channel](https://discord.gg/grXXvj9Whz).
+## Evaluating different models on the BFCL
 
 ### Generating LLM Responses
 
@@ -103,7 +113,7 @@ For available options for `MODEL_NAME` and `TEST_CATEGORY`, please refer to the 
 
 If no `MODEL_NAME` is provided, the model `gorilla-openfunctions-v2` will be used by default. If no `TEST_CATEGORY` is provided, all test categories will be run by default.
 
-### Models Available
+#### Models Available
 Below is *a table of models we support* to run our leaderboard evaluation against. If the models support function calling (FC), we will follow its function calling format provided by official documentation. Otherwise, we use a consistent system message to prompt the model to generate function calls in the right format.
 |Model | Type |
 |---|---|
@@ -162,7 +172,7 @@ For `Gemini-1.0-pro`, you need to fill in `model_handler/gemini_handler.py` with
 For `Databrick-DBRX-instruct`, you need to create a Databrick Azure workspace and setup an endpoint for inference. 
 
 
-### Available Test Category
+#### Available Test Category
 In the following two sections, the optional `--test-category` parameter can be used to specify the category of tests to run. You can specify multiple categories separated by spaces. Available options include:
 
 - `all`: Run all test categories.
@@ -194,8 +204,6 @@ In the following two sections, the optional `--test-category` parameter can be u
 > By setting the `--api-sanity-check` flag, or `-c` for short, if the test categories include `executable`, the evaluation process will perform the REST API sanity check first to ensure that all the API endpoints involved during the execution evaluation process are working properly. If any of them are not behaving as expected, we will flag those in the console and continue execution.
 
 
-## Evaluating the LLM generations
-
 ### Running the Checker
 
 Navigate to the `gorilla/berkeley-function-call-leaderboard/bfcl/eval_checker` directory and run the `eval_runner.py` script with the desired parameters. The basic syntax is as follows:
@@ -208,7 +216,7 @@ For available options for `MODEL_NAME` and `TEST_CATEGORY`, please refer to the 
 
 If no `MODEL_NAME` is provided, all available model results will be evaluated by default. If no `TEST_CATEGORY` is provided, all test categories will be run by default.
 
-### Example Usage
+#### Example Usage
 
 If you want to run all tests for the `gorilla-openfunctions-v2` model, you can use the following command:
 
@@ -234,9 +242,9 @@ If you want to run `rest` and `javascript` tests for a few models and `gorilla-o
 python eval_runner.py --model gorilla-openfunctions-v2 claude-3-5-sonnet-20240620 gpt-4-0125-preview gemini-1.5-pro-preview-0514 --test-category rest javascript
 ```
 
-### Model-Specific Optimization
+#### Model-Specific Optimization
 
-Some companies have proposed some optimization strategies in their models' handler, which we (BFCL) think is unfair to other models, as those optimizations are not generalizable to all models. Therefore, we have disabled those optimizations during the evaluation process by default. You can enable those optimizations by setting the `USE_{COMPANY}_OPTIMIZATION` flag to `True` in the `model_handler/constants.py` file.
+Some companies have proposed some optimization strategies in their models' handler, which we (BFCL) think is unfair to other models, as those optimizations are not generalizable to all models. Therefore, we have disabled those optimizations during the evaluation process by default. You can enable those optimizations by setting the `USE_{COMPANY}_OPTIMIZATION` flag to `True` in the `.env` file.
 
 
 ## Changelog
