@@ -1,7 +1,7 @@
 import json
 import os
 
-from bfcl.model_handler.handler import BaseHandler
+from bfcl.model_handler.base_handler import BaseHandler
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.utils import (
     ast_parse,

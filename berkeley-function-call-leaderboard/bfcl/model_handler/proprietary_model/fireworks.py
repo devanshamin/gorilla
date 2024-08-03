@@ -3,13 +3,13 @@ import os
 import time
 
 from bfcl.model_handler.constant import GORILLA_TO_OPENAPI
-from bfcl.model_handler.gpt_handler import OpenAIHandler
+from bfcl.model_handler.proprietary_model.openai import OpenAIHandler
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.utils import convert_to_tool, language_specific_pre_processing
 from openai import OpenAI
 
 
-class FireworkAIHandler(OpenAIHandler):
+class FireworksHandler(OpenAIHandler):
     def __init__(self, model_name, temperature=0.0, top_p=1, max_tokens=1000) -> None:
         super().__init__(model_name, temperature, top_p, max_tokens)
         self.model_style = ModelStyle.FIREWORK_AI

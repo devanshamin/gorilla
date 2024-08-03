@@ -1,26 +1,26 @@
-from bfcl.model_handler.arctic_handler import ArcticHandler
-from bfcl.model_handler.claude_fc_handler import ClaudeFCHandler
-from bfcl.model_handler.claude_prompt_handler import ClaudePromptingHandler
-from bfcl.model_handler.cohere_handler import CohereHandler
-from bfcl.model_handler.databricks_handler import DatabricksHandler
-from bfcl.model_handler.deepseek_handler import DeepseekHandler
-from bfcl.model_handler.firework_ai_handler import FireworkAIHandler
-from bfcl.model_handler.functionary_handler import FunctionaryHandler
-from bfcl.model_handler.gemini_handler import GeminiHandler
-from bfcl.model_handler.gemma_handler import GemmaHandler
-from bfcl.model_handler.glaive_handler import GlaiveHandler
-from bfcl.model_handler.gorilla_handler import GorillaHandler
-from bfcl.model_handler.gpt_handler import OpenAIHandler
-from bfcl.model_handler.hermes_handler import HermesHandler
-from bfcl.model_handler.llama_handler import LlamaHandler
-from bfcl.model_handler.mistral_handler import MistralHandler
-from bfcl.model_handler.nexus_handler import NexusHandler
-from bfcl.model_handler.oss_handler import OSSHandler
-from bfcl.model_handler.granite_handler import GraniteHandler
-from bfcl.model_handler.nvidia_handler import NvidiaHandler
-from bfcl.model_handler.glm_handler import GLMHandler
-from bfcl.model_handler.yi_handler import YiHandler
-from bfcl.model_handler.xlam_handler import xLAMHandler
+from bfcl.model_handler.proprietary_model.gorilla import GorillaHandler
+from bfcl.model_handler.proprietary_model.openai import OpenAIHandler
+from bfcl.model_handler.proprietary_model.anthropic_prompt import AnthropicPromptHandler
+from bfcl.model_handler.proprietary_model.anthropic_fc import AnthropicFCHandler
+from bfcl.model_handler.proprietary_model.mistral import MistralHandler
+from bfcl.model_handler.proprietary_model.fireworks import FireworksHandler
+from bfcl.model_handler.proprietary_model.nexus import NexusHandler
+from bfcl.model_handler.proprietary_model.gemini import GeminiHandler
+from bfcl.model_handler.proprietary_model.databricks import DatabricksHandler
+from bfcl.model_handler.proprietary_model.cohere import CohereHandler
+from bfcl.model_handler.proprietary_model.snowflake import SnowflakeHandler
+from bfcl.model_handler.proprietary_model.nvidia import NvidiaHandler
+from bfcl.model_handler.proprietary_model.yi import YiHandler
+from bfcl.model_handler.proprietary_model.functionary import FunctionaryHandler
+
+from bfcl.model_handler.oss_model.llama import LlamaHandler
+from bfcl.model_handler.oss_model.salesforce import SalesforceHandler
+from bfcl.model_handler.oss_model.granite import GraniteHandler
+from bfcl.model_handler.oss_model.glm import GLMHandler
+from bfcl.model_handler.oss_model.hermes import HermesHandler
+from bfcl.model_handler.oss_model.gemma import GemmaHandler
+from bfcl.model_handler.oss_model.deepseek import DeepseekHandler
+from bfcl.model_handler.oss_model.glaive import GlaiveHandler
 
 handler_map = {
     "gorilla-openfunctions-v0": GorillaHandler,
@@ -37,16 +37,16 @@ handler_map = {
     "gpt-4-0613": OpenAIHandler,
     "gpt-3.5-turbo-0125-FC": OpenAIHandler,
     "gpt-3.5-turbo-0125": OpenAIHandler,
-    "claude-2.1": ClaudePromptingHandler,
-    "claude-instant-1.2": ClaudePromptingHandler,
-    "claude-3-opus-20240229": ClaudePromptingHandler,
-    "claude-3-opus-20240229-FC": ClaudeFCHandler,
-    "claude-3-sonnet-20240229": ClaudePromptingHandler,
-    "claude-3-sonnet-20240229-FC": ClaudeFCHandler,
-    "claude-3-haiku-20240307": ClaudePromptingHandler,
-    "claude-3-haiku-20240307-FC": ClaudeFCHandler,
-    "claude-3-5-sonnet-20240620": ClaudePromptingHandler,
-    "claude-3-5-sonnet-20240620-FC": ClaudeFCHandler,
+    "claude-2.1": AnthropicPromptHandler,
+    "claude-instant-1.2": AnthropicPromptHandler,
+    "claude-3-opus-20240229": AnthropicPromptHandler,
+    "claude-3-opus-20240229-FC": AnthropicFCHandler,
+    "claude-3-sonnet-20240229": AnthropicPromptHandler,
+    "claude-3-sonnet-20240229-FC": AnthropicFCHandler,
+    "claude-3-haiku-20240307": AnthropicPromptHandler,
+    "claude-3-haiku-20240307-FC": AnthropicFCHandler,
+    "claude-3-5-sonnet-20240620": AnthropicPromptHandler,
+    "claude-3-5-sonnet-20240620-FC": AnthropicFCHandler,
     "mistral-large-2402": MistralHandler,
     "mistral-large-2402-FC-Any": MistralHandler,
     "mistral-large-2402-FC-Auto": MistralHandler,
@@ -55,8 +55,8 @@ handler_map = {
     "mistral-small-2402-FC-Any": MistralHandler,
     "mistral-small-2402-FC-Auto": MistralHandler,
     "mistral-tiny-2312": MistralHandler,
-    "firefunction-v1-FC": FireworkAIHandler,
-    "firefunction-v2-FC": FireworkAIHandler,
+    "firefunction-v1-FC": FireworksHandler,
+    "firefunction-v2-FC": FireworksHandler,
     "Nexusflow-Raven-v2": NexusHandler,
     "gemini-1.0-pro": GeminiHandler,
     "gemini-1.5-pro-preview-0409": GeminiHandler,
@@ -81,11 +81,11 @@ handler_map = {
     "command-r-plus": CohereHandler,
     "command-r-plus-FC-optimized": CohereHandler,
     "command-r-plus-optimized": CohereHandler,
-    "snowflake/arctic": ArcticHandler,
+    "snowflake/arctic": SnowflakeHandler,
     "ibm-granite/granite-20b-functioncalling": GraniteHandler,
     "nvidia/nemotron-4-340b-instruct": NvidiaHandler,
     "THUDM/glm-4-9b-chat": GLMHandler,
     "yi-large-fc": YiHandler,
-    "Salesforce/xLAM-1b-fc-r": xLAMHandler,
-    "Salesforce/xLAM-7b-fc-r": xLAMHandler
+    "Salesforce/xLAM-1b-fc-r": SalesforceHandler,
+    "Salesforce/xLAM-7b-fc-r": SalesforceHandler,
 }

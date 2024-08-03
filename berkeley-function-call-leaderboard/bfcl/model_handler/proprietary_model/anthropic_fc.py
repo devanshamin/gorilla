@@ -4,9 +4,9 @@ import time
 
 from anthropic import Anthropic
 from anthropic.types import TextBlock, ToolUseBlock
-from bfcl.model_handler.claude_prompt_handler import ClaudePromptingHandler
+from bfcl.model_handler.proprietary_model.anthropic_prompt import AnthropicPromptHandler
 from bfcl.model_handler.constant import GORILLA_TO_OPENAPI
-from bfcl.model_handler.handler import BaseHandler
+from bfcl.model_handler.base_handler import BaseHandler
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.utils import (
     ast_parse,
@@ -17,7 +17,7 @@ from bfcl.model_handler.utils import (
 )
 
 
-class ClaudeFCHandler(BaseHandler):
+class AnthropicFCHandler(BaseHandler):
     def __init__(self, model_name, temperature=0.7, top_p=1, max_tokens=1000) -> None:
         super().__init__(model_name, temperature, top_p, max_tokens)
         self.model_style = ModelStyle.Anthropic_Prompt
@@ -26,7 +26,7 @@ class ClaudeFCHandler(BaseHandler):
 
     def inference(self, prompt, functions, test_category):
         if "FC" not in self.model_name:
-            handler = ClaudePromptingHandler(self.model_name, self.temperature, self.top_p, self.max_tokens)
+            handler = AnthropicPromptHandler(self.model_name, self.temperature, self.top_p, self.max_tokens)
             return handler.inference(prompt, functions, test_category)
         else:
             prompt = augment_prompt_by_languge(prompt, test_category)

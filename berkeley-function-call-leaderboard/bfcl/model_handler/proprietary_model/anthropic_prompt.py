@@ -1,4 +1,4 @@
-from bfcl.model_handler.handler import BaseHandler
+from bfcl.model_handler.base_handler import BaseHandler
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.utils import (
     convert_to_tool,
@@ -18,7 +18,7 @@ import os, time
 from anthropic import Anthropic
 
 
-class ClaudePromptingHandler(BaseHandler):
+class AnthropicPromptHandler(BaseHandler):
     def __init__(self, model_name, temperature=0.7, top_p=1, max_tokens=1000) -> None:
         super().__init__(model_name, temperature, top_p, max_tokens)
         self.model_style = ModelStyle.Anthropic_Prompt
