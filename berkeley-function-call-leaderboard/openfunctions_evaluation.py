@@ -4,7 +4,7 @@ from bfcl.model_handler.handler_map import handler_map
 from bfcl.model_handler.model_style import ModelStyle
 from bfcl.model_handler.constant import USE_COHERE_OPTIMIZATION
 from bfcl.eval_checker.eval_checker_constant import TEST_COLLECTION_MAPPING
-
+from dotenv import load_dotenv
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -128,6 +128,8 @@ def generate_results(args, model_name, test_cases_total):
 
 
 if __name__ == "__main__":
+    load_dotenv()  # Load the .env file
+    
     args = get_args()
 
     if type(args.model) is not list:

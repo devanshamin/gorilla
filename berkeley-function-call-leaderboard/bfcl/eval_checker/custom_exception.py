@@ -1,6 +1,6 @@
 class NoAPIKeyError(Exception):
-    def __init__(self):
-        self.message = "❗️Please fill in the API keys in the function_credential_config.json file. If you do not provide the API keys, the executable test category results will be inaccurate."
+    def __init__(self, missing_key_name):
+        self.message = f"❗️Please fill in the {missing_key_name} in the .env file under gorilla/berkeley-function-call-leaderboard folder. They are required for the executable test category evaluation."
         super().__init__(self.message)
         
         

@@ -4,6 +4,7 @@ from eval_runner_helper import *
 from eval_checker_constant import TEST_COLLECTION_MAPPING
 from tqdm import tqdm
 import argparse
+from dotenv import load_dotenv
 
 
 # NOTE: This file should be run in the `eval_checker` directory
@@ -464,5 +465,6 @@ if __name__ == "__main__":
             # This is differnet than the model name format that the generation script "openfunctions_evaluation.py" takes in (where the name contains "/").
             # We patch it here to avoid confusing the user.
             model_names.append(model_name.replace("/", "_"))
-
+            
+    load_dotenv()  # Load the .env file
     runner(model_names, test_categories, api_sanity_check)
