@@ -5,12 +5,12 @@ import statistics
 import subprocess
 
 import numpy as np
-from custom_exception import BadAPIStatusError
+from bfcl.eval_checker.executable.custom_exception import BadAPIStatusError
 from bfcl.model_handler.handler_map import handler_map
 from tqdm import tqdm
 
-REST_API_GROUND_TRUTH_FILE_PATH = "api_status_check_ground_truth_REST.json"
-EXECTUABLE_API_GROUND_TRUTH_FILE_PATH = "api_status_check_ground_truth_executable.json"
+REST_API_GROUND_TRUTH_FILE_PATH = "./executable/api_status_check_ground_truth_REST.json"
+EXECTUABLE_API_GROUND_TRUTH_FILE_PATH = "./executable/api_status_check_ground_truth_executable.json"
 
 COLUMNS = [
     "Rank",
