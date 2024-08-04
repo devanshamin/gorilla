@@ -665,12 +665,12 @@ def is_empty_output(decoded_output):
 def api_status_sanity_check_rest():
 
     # We only need to import the executable_checker_rest in this function. So a local import is used.
-    from checker import executable_checker_rest
+    from bfcl.eval_checker.executable.executable_checker import executable_checker_rest
 
     ground_truth_dummy = load_file(REST_API_GROUND_TRUTH_FILE_PATH)
 
     # Use the ground truth data to make sure the API is working correctly
-    command = f"cd ../.. ; python apply_function_credential_config.py --input-path ./bfcl/eval_checker/{REST_API_GROUND_TRUTH_FILE_PATH};"
+    command = f"cd ../.. ; python apply_function_credential_config.py --input-path ./bfcl/eval_checker/executable/{REST_API_GROUND_TRUTH_FILE_PATH};"
     try:
         subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -698,7 +698,7 @@ def api_status_sanity_check_rest():
 
 
 def api_status_sanity_check_executable():
-    from checker import executable_checker_simple
+    from bfcl.eval_checker.executable.executable_checker import executable_checker_simple
 
     ground_truth = load_file(EXECTUABLE_API_GROUND_TRUTH_FILE_PATH)
     correct_count = 0
