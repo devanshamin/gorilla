@@ -1,10 +1,9 @@
 import argparse, json, os
 from tqdm import tqdm
-from model_handler.handler_map import handler_map
-from model_handler.model_style import ModelStyle
-from model_handler.constant import USE_COHERE_OPTIMIZATION
-from eval_checker.eval_checker_constant import TEST_COLLECTION_MAPPING
-
+from bfcl.model_handler.handler_map import handler_map
+from bfcl.model_handler.model_style import ModelStyle
+from bfcl.eval_checker.eval_checker_constant import TEST_COLLECTION_MAPPING
+from dotenv import load_dotenv
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -59,7 +58,7 @@ def parse_test_category_argument(test_category_args):
             test_name_total.add(test_category)
             test_filename_total.add(TEST_FILE_MAPPING[test_category])
 
-    return list(test_name_total), list(test_filename_total)
+    return sorted(list(test_name_total)), sorted(list(test_filename_total))
 
 
 def collect_test_cases(test_filename_total, model_name):
@@ -128,6 +127,8 @@ def generate_results(args, model_name, test_cases_total):
 
 
 if __name__ == "__main__":
+    load_dotenv(dotenv_path="./.env", verbose=True, override=True)  # Load the .env file
+    
     args = get_args()
 
     if type(args.model) is not list:
@@ -140,7 +141,7 @@ if __name__ == "__main__":
     print(f"Generating results for {args.model} on test category: {test_name_total}.")
 
     for model_name in args.model:
-        if USE_COHERE_OPTIMIZATION and "command-r-plus" in model_name:
+        if os.getenv("USE_COHERE_OPTIMIZATION") and "command-r-plus" in model_name:
             model_name = model_name + "-optimized"
         
         test_cases_total = collect_test_cases(test_filename_total, model_name)
