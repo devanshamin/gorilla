@@ -1,6 +1,6 @@
-from bfcl.eval_checker.ast.ast_checker import ast_checker
-from bfcl.eval_checker.executable.executable_checker import executable_checker_rest, executable_checker_non_rest
-from bfcl.eval_checker.executable.custom_exception import BadAPIStatusError
+from bfcl.eval_checker.ast_eval.ast_checker import ast_checker
+from bfcl.eval_checker.executable_eval.executable_checker import executable_checker_rest, executable_checker_non_rest
+from bfcl.eval_checker.executable_eval.custom_exception import BadAPIStatusError
 from eval_runner_helper import *
 from eval_checker_constant import TEST_COLLECTION_MAPPING
 from tqdm import tqdm

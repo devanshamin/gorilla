@@ -1,11 +1,11 @@
-from eval_checker_constant import REAL_TIME_MATCH_ALLOWED_DIFFERENCE
-from custom_exception import NoAPIKeyError
+from bfcl.eval_checker.eval_checker_constant import REAL_TIME_MATCH_ALLOWED_DIFFERENCE
+from bfcl.eval_checker.executable_eval.custom_exception import NoAPIKeyError
 import requests  # Do not remove this import even though it seems to be unused. It's used in the executable_checker_rest function.
 import time
 import json
 
 EVAL_GROUND_TRUTH_PATH = (
-    "./rest-eval-response_v5.jsonl"  # Ground truth file for v5 for rest execution
+    "./executable_eval/rest-eval-response_v5.jsonl"  # Ground truth file for v5 for rest execution
 )
 with open(EVAL_GROUND_TRUTH_PATH, "r") as f:
     EVAL_GROUND_TRUTH = f.readlines()
@@ -209,7 +209,7 @@ def executable_checker_simple(
 
     try:
         exec(
-            "from executable_python_function import *" + "\nresult=" + function_call,
+            "from bfcl.eval_checker.executable_eval.executable_python_function import *" + "\nresult=" + function_call,
             exec_dict,
         )
         exec_output = exec_dict["result"]

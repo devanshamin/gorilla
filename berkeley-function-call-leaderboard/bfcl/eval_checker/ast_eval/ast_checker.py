@@ -377,7 +377,7 @@ def simple_function_checker(
         nested_type_converted = None
 
         if language == "Java":
-            from bfcl.eval_checker.ast.type_converter.java_type_converter import java_type_converter
+            from bfcl.eval_checker.ast_eval.type_converter.java_type_converter import java_type_converter
 
             expected_type_converted = JAVA_TYPE_CONVERSION[expected_type_description]
 
@@ -400,7 +400,7 @@ def simple_function_checker(
                     value = java_type_converter(value, expected_type_description)
 
         elif language == "JavaScript":
-            from bfcl.eval_checker.ast.type_converter.js_type_converter import js_type_converter
+            from bfcl.eval_checker.ast_eval.type_converter.js_type_converter import js_type_converter
 
             expected_type_converted = JS_TYPE_CONVERSION[expected_type_description]
 
