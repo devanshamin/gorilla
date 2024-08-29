@@ -9,12 +9,7 @@ from bfcl.eval_checker.ast_eval.type_convertor import (
 )
 import re
 
-
-# We switch to conditional import for the following two imports to avoid unnecessary installations.
-# User doesn't need to setup the tree-sitter packages if they are not running the test for that language.
-# from js_type_converter import js_type_converter
-# from java_type_converter import java_type_converter
-
+#### Constants ####
 PYTHON_TYPE_MAPPING = {
     "string": str,
     "integer": int,
@@ -34,8 +29,6 @@ NESTED_CONVERSION_TYPE_LIST = ["Array", "ArrayList", "array"]
 
 
 #### Main function ####
-
-
 def ast_checker(
     func_description, model_output, possible_answer, language, test_category, model_name
 ):
@@ -63,8 +56,6 @@ def ast_checker(
 
 
 #### Helper functions for AST ####
-
-
 def find_description(func_descriptions, name):
     if type(func_descriptions) == list:
         for func_description in func_descriptions:
