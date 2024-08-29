@@ -8,7 +8,7 @@ import json
 
 #### Constants ####
 EVAL_GROUND_TRUTH_PATH = (
-    "./data/rest-eval-response_v5.jsonl"  # Ground truth file for v5 for rest execution
+    "./executable_eval/data/rest-eval-response_v5.jsonl"  # Ground truth file for v5 for rest execution
 )
 with open(EVAL_GROUND_TRUTH_PATH, "r") as f:
     EVAL_GROUND_TRUTH = f.readlines()
@@ -208,7 +208,7 @@ def executable_checker_simple(
 
     try:
         exec(
-            "from executable_python_function import *" + "\nresult=" + function_call,
+            "from bfcl.eval_checker.executable_eval.data.executable_python_function import *" + "\nresult=" + function_call,
             exec_dict,
         )
         exec_output = exec_dict["result"]

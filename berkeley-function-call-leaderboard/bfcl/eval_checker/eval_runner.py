@@ -1,7 +1,8 @@
-from checker import ast_checker, exec_checker, executable_checker_rest
-from custom_exception import BadAPIStatusError
-from eval_runner_helper import *
-from eval_checker_constant import TEST_COLLECTION_MAPPING
+from bfcl.eval_checker.ast_eval.ast_checker import ast_checker
+from bfcl.eval_checker.executable_eval.executable_checker import executable_checker_non_rest, executable_checker_rest
+from bfcl.eval_checker.executable_eval.custom_exception import BadAPIStatusError
+from bfcl.eval_checker.eval_runner_helper import *
+from bfcl.eval_checker.eval_checker_constant import TEST_COLLECTION_MAPPING
 from tqdm import tqdm
 import argparse
 from dotenv import load_dotenv
@@ -78,7 +79,7 @@ def single_executable_file_runner(
                 continue
 
             prompt_item = prompt[i]
-            checker_result = exec_checker(decoded_result, prompt_item, test_category)
+            checker_result = executable_checker_non_rest(decoded_result, prompt_item, test_category)
 
         if checker_result["valid"]:
             correct_count += 1

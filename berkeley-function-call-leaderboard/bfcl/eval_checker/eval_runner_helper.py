@@ -5,12 +5,12 @@ import statistics
 import subprocess
 import re
 import numpy as np
-from custom_exception import BadAPIStatusError
+from bfcl.eval_checker.executable_eval.custom_exception import BadAPIStatusError
 from bfcl.model_handler.handler_map import handler_map
 from tqdm import tqdm
 
-REST_API_GROUND_TRUTH_FILE_PATH = "api_status_check_ground_truth_REST.json"
-EXECTUABLE_API_GROUND_TRUTH_FILE_PATH = "api_status_check_ground_truth_executable.json"
+REST_API_GROUND_TRUTH_FILE_PATH = "./executable_eval/data/api_status_check_ground_truth_REST.json"
+EXECTUABLE_API_GROUND_TRUTH_FILE_PATH = "./executable_eval/data/api_status_check_ground_truth_executable.json"
 
 COLUMNS_NON_LIVE = [
     "Rank",
@@ -804,7 +804,7 @@ def is_empty_output(decoded_output):
 def api_status_sanity_check_rest():
 
     # We only need to import the executable_checker_rest in this function. So a local import is used.
-    from checker import executable_checker_rest
+    from bfcl.eval_checker.executable_eval.executable_checker import executable_checker_rest
 
     ground_truth_dummy = load_file(REST_API_GROUND_TRUTH_FILE_PATH)
 
@@ -837,7 +837,7 @@ def api_status_sanity_check_rest():
 
 
 def api_status_sanity_check_executable():
-    from checker import executable_checker_simple
+    from bfcl.eval_checker.executable_eval.executable_checker import executable_checker_simple
 
     ground_truth = load_file(EXECTUABLE_API_GROUND_TRUTH_FILE_PATH)
     correct_count = 0
@@ -894,7 +894,7 @@ def get_executable_expected_output(prompt_file_path):
         ground_truth = item["ground_truth"]
         for i in range(len(ground_truth)):
             exec(
-                "from executable_python_function import *"
+                "from bfcl.eval_checker.executable_eval.data.executable_python_function import *"
                 + "\nresult="
                 + ground_truth[i],
                 exec_dict,
